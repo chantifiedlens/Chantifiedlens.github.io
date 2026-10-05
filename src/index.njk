@@ -1,0 +1,42 @@
+---
+layout: base.njk
+title: Practical solutions, shared openly
+---
+{% from 'macros.njk' import imagePair %}
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <p class="eyebrow hero-eyebrow"><span class="status-dot" aria-hidden="true"></span>Open source · Microsoft data technologies</p>
+      <h1>Your next solution.<br><em>A head start.</em></h1>
+      <p class="hero-lead">Practical examples, solutions and templates for the way you build with data.</p>
+      <p class="hero-description">Explore free, publicly available GitHub repositories from Chantified Lens—covering Microsoft Fabric, Azure Synapse Analytics, SQL Server and Azure SQL Database, with GitHub Actions and Azure DevOps workflows.</p>
+      <div class="hero-actions"><a class="button button-primary" href="{{ '/repositories/' | url }}">Explore repositories <span aria-hidden="true">→</span></a><a class="button button-ghost" href="#technologies">Find your technology <span aria-hidden="true">↓</span></a></div>
+      <p class="hero-footnote">Explore. Clone. Adapt. Make it your own.</p>
+    </div>
+    <div class="hero-discovery" aria-label="Find a repository by technology and workflow">
+      <div class="discovery-top"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>the solution explorer</span><span aria-hidden="true">⌘</span></div>
+      <div class="discovery-content"><p class="code-label">01 / choose your technology</p><div class="discovery-technologies">
+        {% for technology in catalog.technologies %}{% if technology.id != 'other' %}<a href="{{ ('/' + technology.id + '/') | url }}">{% if technology.icon %}<img src="{{ ('/images/' + icons[technology.icon].file) | url }}" alt="" width="{{ icons[technology.icon].width }}" height="{{ icons[technology.icon].height }}">{% else %}<span class="sql-label" aria-hidden="true">SQL</span>{% endif %}<span>{{ technology.name }}</span><span aria-hidden="true">↗</span></a>{% endif %}{% endfor %}</div>
+        <p class="code-label">02 / bring your workflow</p><div class="workflow-chips"><span><img src="{{ '/images/GitHub_Invertocat_Black.png' | url }}" alt="" width="294" height="288">GitHub Actions</span><span><img src="{{ '/images/10261-icon-service-Azure-DevOps.svg' | url }}" alt="" width="18" height="18">Azure DevOps</span></div>
+        <div class="discovery-result"><span aria-hidden="true">✓</span><div>A starting point, not a blank page.<small>Real repositories. Reusable ideas.</small></div></div>
+      </div>
+      <div class="discovery-bottom"><span class="status-dot" aria-hidden="true"></span>Built for discovery. Powered by GitHub topics.</div>
+    </div>
+  </div>
+</section>
+<div class="stats-strip"><div><strong>{{ catalog.repositories.length | numberLabel }}</strong><span>public repositories</span></div><div><strong>{{ catalog.technologies.length - 1 }}</strong><span>core technologies</span></div><div><strong>{{ catalog.templateCount | numberLabel }}</strong><span>GitHub templates</span></div><div><strong>100%</strong><span>publicly available</span></div></div>
+<section class="section" id="technologies">
+  <div class="section-heading"><div><p class="eyebrow">Find your starting point</p><h2>Built around your stack.</h2></div><p>Choose a technology, then the workflow you use.<br>The right repositories are a couple of clicks away.</p></div>
+  <div class="technology-grid">{% for technology in catalog.technologies %}<article class="technology-card accent-{{ technology.accent }} {% if technology.id == 'other' %}technology-other{% endif %}">
+    <div class="technology-card-top">{% if technology.icon %}{{ imagePair([technology.icon], icons) }}{% else %}<span class="technology-monogram" aria-hidden="true">{% if technology.id == 'sql-server' %}SQL{% else %}＋{% endif %}</span>{% endif %}<span class="count-badge">{{ technology.repositories.length }} {% if technology.repositories.length == 1 %}repo{% else %}repos{% endif %}</span></div>
+    <h3><a href="{{ ('/' + technology.id + '/') | url }}">{{ technology.name }} <span aria-hidden="true">↗</span></a></h3><p>{{ technology.description }}</p>
+    <ul class="category-links">{% for category in technology.categories %}<li><a href="{{ ('/' + category.path + '/') | url }}"><span>{{ category.platform }}</span><span>{{ category.repositories.length }} <span aria-hidden="true">→</span></span></a></li>{% endfor %}</ul>
+  </article>{% endfor %}</div>
+  <div class="section-note"><span aria-hidden="true">↳</span><p>Working across technologies? <a href="{{ '/repositories/' | url }}">Search the complete catalog</a> to see every public repository in one place.</p></div>
+</section>
+<section class="getting-started" id="getting-started"><div class="section">
+  <div class="section-heading"><div><p class="eyebrow">From example to your solution</p><h2>Explore it. Then make it yours.</h2></div><p>A practical starting point for your next project,<br>not a one-size-fits-all prescription.</p></div>
+  <ol class="steps"><li><span class="step-number">01</span><h3>Discover a repository</h3><p>Browse by technology and workflow. Read the description, topics and README to find a useful starting point.</p></li><li><span class="step-number">02</span><h3>Clone or use a template</h3><p>Download the source, clone the repository or select “Use this template” where available. Check the README and repository license before reuse.</p></li><li><span class="step-number">03</span><h3>Adapt it to your needs</h3><p>Make it your own. Review prerequisites, configuration and security before using an example in your environment.</p></li></ol>
+  <aside class="credit-note"><span class="credit-symbol" aria-hidden="true">↗</span><div><h3>Good ideas go further with a little credit.</h3><p>If a repository helps you build your own solution, a mention or link back to Chantified Lens is always appreciated. It helps others discover the original examples, too.</p></div><a class="text-link" href="{{ site.githubUrl }}">Original source ↗</a></aside>
+</div></section>
+<section class="section resources" id="resources"><div class="section-heading"><div><p class="eyebrow">Go a little deeper</p><h2>Documentation, straight from the source.</h2></div><p>Keep the official guides close at hand<br>as you explore and adapt these examples.</p></div><div class="resource-grid">{% for resource in site.resources %}<a class="resource-link" href="{{ resource.url }}" target="_blank" rel="noopener noreferrer"><span><strong>{{ resource.name }}</strong><small>{{ resource.detail }}</small></span><span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>{% endfor %}</div></section>

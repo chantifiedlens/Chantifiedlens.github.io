@@ -1,0 +1,13 @@
+---
+layout: base.njk
+pagination:
+  data: catalog.technologyPages
+  size: 1
+  alias: technology
+eleventyComputed:
+  title: "{{ technology.name }}"
+  permalink: "/{{ technology.id }}/index.html"
+---
+{% from 'macros.njk' import imagePair, repositoryListing %}
+<div class="page-heading"><div class="section"><p class="breadcrumb"><a href="{{ '/' | url }}">Home</a><span aria-hidden="true">/</span>{{ technology.name }}</p>{% if technology.icon %}{{ imagePair([technology.icon], icons) }}{% endif %}<p class="eyebrow">Technology collection</p><h1>{{ technology.name }}</h1><p>{{ technology.description }}<br>Choose a workflow below, or explore all repositories for this technology.</p></div></div>
+<section class="section catalog-section" aria-label="Technology repositories"><nav class="collection-nav" aria-label="Workflow categories">{% for category in technology.categories %}<a href="{{ ('/' + category.path + '/') | url }}">{{ category.platform }} <span>{{ category.repositories.length }}</span></a>{% endfor %}<a href="{{ '/repositories/' | url }}">All repositories →</a></nav>{{ repositoryListing(technology.repositories, catalog.categories) }}</section>

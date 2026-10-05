@@ -1,0 +1,8 @@
+---
+layout: base.njk
+title: Repository catalog
+permalink: /repositories/index.html
+---
+{% from 'macros.njk' import repositoryListing %}
+<div class="page-heading"><div class="section"><p class="breadcrumb"><a href="{{ '/' | url }}">Home</a><span aria-hidden="true">/</span>Repositories</p><p class="eyebrow">The complete collection</p><h1>Find your next starting point.</h1><p>Every public repository from Chantified Lens, in one searchable catalog.<br>Browse by technology and workflow, or follow your curiosity.</p></div></div>
+<section class="section catalog-section" aria-label="Public repository catalog"><p class="catalog-note">Each repository appears once here. Repositories with multiple relevant topics can also be found in each matching category. Forks and archived repositories are labelled, not hidden.</p>{{ repositoryListing(catalog.repositories, catalog.categories, true) }}</section>

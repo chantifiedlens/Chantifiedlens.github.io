@@ -1,0 +1,16 @@
+---
+layout: base.njk
+pagination:
+  data: catalog.categories
+  size: 1
+  alias: category
+eleventyComputed:
+  title: "{{ category.title }}"
+  permalink: "/{{ category.path }}/index.html"
+---
+{% from 'macros.njk' import imagePair, repositoryListing %}
+<div class="page-heading"><div class="section"><p class="breadcrumb"><a href="{{ '/' | url }}">Home</a><span aria-hidden="true">/</span><a href="{{ ('/' + category.technology + '/') | url }}">{% for technology in catalog.technologies %}{% if technology.id == category.technology %}{{ technology.name }}{% endif %}{% endfor %}</a>{% if not category.fallback %}<span aria-hidden="true">/</span>{{ category.platform }}{% endif %}</p>
+  {{ imagePair(category.icons, icons) }}<p class="eyebrow">{% if category.fallback %}Beyond the main categories{% else %}{{ category.platform }} · Repository collection{% endif %}</p><h1>{{ category.title }}</h1><p>{% if category.fallback %}Tools, experiments and examples that do not yet match another topic category. There’s more to discover here.{% else %}Practical examples and reusable starting points, automatically organised by repository topics.{% endif %}</p>
+  <div class="rule-tags"><span>Topic rules:</span>{% for topic in category.all %}<code>{{ topic }}</code>{% endfor %}{% if category.any.length %}<code>{{ category.any | join(' or ') }}</code>{% endif %}{% for topic in category['none'] %}<code>not {{ topic }}</code>{% endfor %}{% if category.fallback %}<code>no other category matches</code>{% endif %}</div>
+</div></div>
+<section class="section catalog-section" aria-label="Repositories in this category"><nav class="collection-nav" aria-label="Related workflows">{% for related in catalog.categories %}{% if related.technology == category.technology %}<a href="{{ ('/' + related.path + '/') | url }}" {% if related.id == category.id %}aria-current="page"{% endif %}>{{ related.platform }} <span>{{ related.repositories.length }}</span></a>{% endif %}{% endfor %}<a href="{{ '/repositories/' | url }}">All repositories →</a></nav>{{ repositoryListing(category.repositories, catalog.categories) }}</section>

@@ -1,0 +1,43 @@
+{% macro imagePair(keys, icons) %}
+<div class="product-icons">
+  {% for key in keys %}{% set icon = icons[key] %}
+  <span class="product-icon"><img src="{{ ('/images/' + icon.file) | url }}" alt="{{ icon.alt }}" width="{{ icon.width }}" height="{{ icon.height }}" decoding="async"></span>
+  {% endfor %}
+</div>
+{% endmacro %}
+
+{% macro repositoryCard(repo, categories) %}
+<article class="repo-card" data-repository data-search="{{ repo.searchText }}" data-categories="{{ repo.categoryIds | join(' ') }}" data-name="{{ repo.name }}" data-stars="{{ repo.stars or 0 }}" data-updated="{{ repo.updatedAt or '' }}" data-template="{{ repo.isTemplate }}">
+  <div class="repo-card-top"><span class="eyebrow">Public repository</span>
+    <div class="repo-badges">{% if repo.isTemplate %}<span class="badge template">Template</span>{% endif %}{% if repo.archived %}<span class="badge">Archived</span>{% endif %}{% if repo.fork %}<span class="badge">Fork</span>{% endif %}</div>
+  </div>
+  <h3><a href="{{ repo.url }}" target="_blank" rel="noopener noreferrer">{{ repo.name }}<span aria-hidden="true" class="external-arrow">↗</span><span class="sr-only"> (opens in a new tab)</span></a></h3>
+  <p class="repo-description">{{ repo.description }}</p>
+  {% if repo.topics.length %}<ul class="topic-list" aria-label="Repository topics">{% for topic in repo.topics %}<li>{{ topic }}</li>{% endfor %}</ul>{% else %}<p class="no-topics">No topics assigned</p>{% endif %}
+  <div class="repo-meta">
+    {% if repo.language %}<span><span class="language-dot" aria-hidden="true"></span>{{ repo.language }}</span>{% endif %}
+    {% if repo.stars != null %}<span><span aria-hidden="true">☆</span> {{ repo.stars | numberLabel }} <span class="sr-only">stars</span></span>{% endif %}
+    {% if repo.license %}<span>{{ repo.license }}</span>{% endif %}
+  </div>
+  <div class="repo-bottom">
+    <span class="updated">{% if repo.updatedAt %}Updated <time datetime="{{ repo.updatedAt }}">{{ repo.updatedAt | dateLabel }}</time>{% else %}Update date unavailable{% endif %}</span>
+    <a href="{{ repo.url }}{% if repo.isTemplate %}/generate{% else %}#readme{% endif %}" target="_blank" rel="noopener noreferrer" class="text-link">{% if repo.isTemplate %}Use template{% else %}Read README{% endif %} <span aria-hidden="true">↗</span><span class="sr-only"> for {{ repo.name }} (opens in a new tab)</span></a>
+  </div>
+</article>
+{% endmacro %}
+
+{% macro repositoryListing(repositories, categories, showCategories = false) %}
+<div data-catalog>
+  <form class="filter-bar" data-enhance hidden role="search" aria-label="Filter repositories">
+    <div class="search-field"><label for="repo-search">Search repositories</label><input id="repo-search" type="search" name="q" placeholder="Name, topic, language or description…" autocomplete="off"></div>
+    {% if showCategories %}<div><label for="repo-category">Technology &amp; workflow</label><select id="repo-category" name="category"><option value="">All categories</option>{% for category in categories %}<option value="{{ category.id }}">{{ category.title }}</option>{% endfor %}</select></div>{% endif %}
+    <div><label for="repo-sort">Sort by</label><select id="repo-sort" name="sort"><option value="updated">Recently updated</option><option value="name">Name: A–Z</option><option value="stars">Most stars</option></select></div>
+    <label class="checkbox-label"><input type="checkbox" name="templates"> Templates only</label>
+    <button type="reset" class="reset-button">Reset</button>
+  </form>
+  <div class="listing-summary"><p role="status" aria-live="polite" aria-atomic="true" data-result-count>{{ repositories.length }} {% if repositories.length == 1 %}repository{% else %}repositories{% endif %}</p><span>Public. Practical. Ready to explore.</span></div>
+  <div class="repo-grid" data-repo-grid>{% for repo in repositories %}{{ repositoryCard(repo, categories) }}{% endfor %}</div>
+  {% if not repositories.length %}<div class="empty-state"><h3>A space for what’s next.</h3><p>No public repositories currently match these topics. Check back after the next refresh, or explore the full catalog.</p><a class="text-link" href="{{ '/repositories/' | url }}">Browse all repositories →</a></div>{% endif %}
+  <div class="empty-state" data-no-results hidden><h3>No matching repositories</h3><p>Try another search, choose a different category or reset the filters.</p></div>
+</div>
+{% endmacro %}
