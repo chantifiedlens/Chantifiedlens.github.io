@@ -147,7 +147,7 @@ main:focus {
 }
 
 .brand-logo {
-  width: 64px;
+  width: 48px;
   height: auto;
   flex-shrink: 0;
 }
@@ -844,6 +844,10 @@ main:focus {
   letter-spacing:-.04em;
 }
 
+.footer-brand .brand-logo {
+  width: 40px;
+}
+
 .footer-top p {
   font-size:.8rem;
   color: var(--muted);
@@ -1465,6 +1469,10 @@ main:focus {
 }
 
 @media (max-width:540px) {
+  .brand-logo {
+    width: 40px;
+  }
+
   .hero h1 {
     font-size: 2.9rem;
   }

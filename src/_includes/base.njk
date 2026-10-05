@@ -16,7 +16,7 @@
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="header-inner">
-      <a class="brand" href="{{ '/' | url }}" aria-label="Chantified Lens home"><img class="brand-logo" src="{{ '/images/CLsketch.png' | url }}" alt="" width="1080" height="1080" decoding="async"><span>Chantified<span class="brand-second">Lens</span></span></a>
+      <a class="brand" href="{{ '/' | url }}" aria-label="Chantified Lens home"><img class="brand-logo" src="{{ '/images/CLsketch.png' | url }}" alt="" width="48" height="48" decoding="async"><span>Chantified<span class="brand-second">Lens</span></span></a>
       <nav class="main-nav" aria-label="Main navigation">
         <a href="{{ '/' | url }}" {% if page.url == '/' %}aria-current="page"{% endif %}>Overview</a>
         <a href="{{ '/repositories/' | url }}" {% if page.url == '/repositories/' %}aria-current="page"{% endif %}>Repositories</a>
@@ -28,7 +28,7 @@
   </header>
   <main id="main" tabindex="-1">{{ content | safe }}</main>
   <footer class="site-footer">
-    <div class="footer-top"><div><a class="footer-brand" href="{{ '/' | url }}"><img class="brand-logo" src="{{ '/images/CLsketch.png' | url }}" alt="" width="1080" height="1080" decoding="async"><span>Chantified Lens</span></a><p>Practical solutions. Shared openly.</p></div><nav aria-label="Footer navigation"><a href="{{ '/repositories/' | url }}">Repository catalog</a><a href="{{ '/#resources' | url }}">Official documentation</a><a href="{{ site.githubUrl }}" target="_blank" rel="noopener noreferrer">GitHub ↗<span class="sr-only"> (opens in a new tab)</span></a></nav></div>
+    <div class="footer-top"><div><a class="footer-brand" href="{{ '/' | url }}"><img class="brand-logo" src="{{ '/images/CLsketch.png' | url }}" alt="" width="40" height="40" decoding="async"><span>Chantified Lens</span></a><p>Practical solutions. Shared openly.</p></div><nav aria-label="Footer navigation"><a href="{{ '/repositories/' | url }}">Repository catalog</a><a href="{{ '/#resources' | url }}">Official documentation</a><a href="{{ site.githubUrl }}" target="_blank" rel="noopener noreferrer">GitHub ↗<span class="sr-only"> (opens in a new tab)</span></a></nav></div>
     <div class="footer-bottom"><p>Repository data retrieved <time datetime="{{ catalog.fetchedAt }}">{{ catalog.fetchedAt | dateLabel }}</time> · Updated automatically</p><p>Independent community resource. Not affiliated with Microsoft or GitHub.</p></div>
     {% if catalog.stale %}<p class="freshness-notice">Showing the last successful repository snapshot. GitHub data may have changed since {{ catalog.fetchedAt | dateLabel }}.</p>{% endif %}
   </footer>
