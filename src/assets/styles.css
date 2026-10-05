@@ -146,17 +146,10 @@ main:focus {
   flex-shrink: 0;
 }
 
-.brand-mark {
-  font-size: 1.2rem;
-  background: #173c32;
-  color: white;
-  border-radius: 9px;
-  padding: 13px 9px;
-  letter-spacing: -.08em;
-}
-
-.brand-mark span,.footer-brand span {
-  color: #a4dab3;
+.brand-logo {
+  width: 64px;
+  height: auto;
+  flex-shrink: 0;
 }
 
 .brand-second {
@@ -843,13 +836,12 @@ main:focus {
 }
 
 .footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
   font-size: 1.25rem;
   font-weight: 700;
   letter-spacing:-.04em;
-}
-
-.footer-brand span {
-  color: var(--green);
 }
 
 .footer-top p {

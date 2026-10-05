@@ -18,6 +18,8 @@ for (const file of htmlFiles) {
   assert.equal((html.match(/<h1\b/g) || []).length, 1, `One h1 required in ${file}`);
   assert.ok(html.includes('<html lang="en">'), `Document language missing: ${file}`);
   assert.ok(!html.includes('{{') && !html.includes('{%'), `Unrendered template: ${file}`);
+  assert.equal((html.match(/<img class="brand-logo"[^>]*src="[^"]*\/images\/CLsketch\.png"/g) || []).length, 2, `Header and footer must use the Chantified Lens logo: ${file}`);
+  assert.ok(!html.includes('class="brand-mark"'), `Old text logo remains: ${file}`);
   const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
   assert.equal(ids.length, new Set(ids).size, `Duplicate IDs in ${file}`);
   for (const [, attribute] of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
@@ -41,6 +43,7 @@ for (const file of htmlFiles) {
 for (const icon of Object.values(icons)) {
   assert.deepEqual(await readFile(join(root, 'images', icon.file)), await readFile(resolve('images', icon.file)), `Original image changed: ${icon.file}`);
 }
+assert.deepEqual(await readFile(join(root, 'images', 'CLsketch.png')), await readFile(resolve('images', 'CLsketch.png')), 'Original Chantified Lens logo changed');
 const snapshot = await readSnapshot(resolve('data/repositories.json'), site.owner);
 const catalog = await readFile(join(root, 'repositories', 'index.html'), 'utf8');
 assert.equal((catalog.match(/data-repository\b/g) || []).length, snapshot.repositories.length, 'Global catalog must include each repository once');
